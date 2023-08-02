@@ -3,6 +3,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "paths": {
+      "primeng/*": ["node_modules/primeng/*"]
+    },
     "types": []
   },
   "files": [
@@ -11,4 +14,4 @@
   "include": [
     "src/**/*.d.ts"
   ]
-}
+} 
