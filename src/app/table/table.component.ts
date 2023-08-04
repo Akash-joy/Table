@@ -1,21 +1,17 @@
+import { Component } from '@angular/core';
 
-export interface student {
- 
-  sl:number;
-  name:string;
-  in_english:number;
-  in_hindi:number;
-  in_malayalam:number;
-  ex_english:number;
-  ex_hindi:number;
-  ex_malayalam:number;
-   rowtotal:number;
-   
-
+interface Student {
+  sl: number;
+  name: string;
+  in_english: number;
+  in_hindi: number;
+  in_malayalam: number;
+  ex_english: number;
+  ex_hindi: number;
+  ex_malayalam: number;
+  rowtotal: number;
 
 }
-
-import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -23,25 +19,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent {
-  details: student[]=[]
- 
-
+  details: Student[] = [];
+  
   ngOnInit() {
     
     this.details = [
-      { sl:1,name:'Ajay',in_english:30,in_hindi:10,in_malayalam:50,  ex_english:20,ex_hindi:40,ex_malayalam:50,rowtotal:0,},
-      { sl:2,name:'Arun',in_english:50,in_hindi:70,in_malayalam:80,  ex_english:20,ex_hindi:10,ex_malayalam:50,rowtotal:0,},
-      { sl:3,name:'Adarsh',in_english:50,in_hindi:70,in_malayalam:80,  ex_english:20,ex_hindi:10,ex_malayalam:50,rowtotal:0,},
-      
+      { sl: 1, name: 'Ajay', in_english: 30, in_hindi: 10, in_malayalam: 50, ex_english: 20, ex_hindi: 40, ex_malayalam: 50, rowtotal: 0 },
+      { sl: 2, name: 'Arun', in_english: 50, in_hindi: 70, in_malayalam: 80, ex_english: 20, ex_hindi: 10, ex_malayalam: 50, rowtotal: 0 },
+      { sl: 3, name: 'Adarsh', in_english: 50, in_hindi: 70, in_malayalam: 80, ex_english: 20, ex_hindi: 10, ex_malayalam: 50, rowtotal: 0 }
     ];
-     
-    this.details.forEach(student => {
-      student.rowtotal = this.Frtotal(student);
-     
 
+    this.details.forEach(student => {
+      student.rowtotal = this.calculateTotalForStudent(student);
     });
   }
-  Frtotal(student: student): number {
+
+  calculateTotalForStudent(student: Student): number {
     return (
       student.in_english +
       student.in_hindi +
@@ -49,30 +42,22 @@ export class TableComponent {
       student.ex_english +
       student.ex_hindi +
       student.ex_malayalam
+      
     );
-} 
+   
+  }
+  
 
-calculateInEnglishTotal(): number {
-  return this.details.reduce((total, student) => total + student.in_english, 0);
-}
-calculateInHindiTotal(): number {
-  return this.details.reduce((total, student) => total + student.in_hindi, 0);
-}
-calculateInMalaTotal(): number {
-  return this.details.reduce((total, student) => total + student.in_malayalam, 0);
-}
-calculateexEnglishTotal(): number {
-  return this.details.reduce((total, student) => total + student.ex_english, 0);
-}
-calculateexHindiTotal(): number {
-  return this.details.reduce((total, student) => total + student.ex_hindi, 0);
-}
-calculateexMalaTotal(): number {
-  return this.details.reduce((total, student) => total + student.ex_malayalam, 0);
-}
-calculateTotal(){
-  return this.details.reduce((total, student) => total + student.rowtotal, 0);
+
+  calculateTotalForSubject(subject: keyof Student): number {
+    let total = 0;
+    for (const student of this.details) {
+      total += Number(student[subject]);
+    }
+    
+    return total;
+    //return this.details.reduce((total,student)=>total + Number(student[subject]),0);
+  }
+  
 
 }
-}
-
